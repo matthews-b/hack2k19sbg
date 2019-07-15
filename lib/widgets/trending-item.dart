@@ -84,7 +84,7 @@ class _TrendingItemState extends State<TrendingItem> {
                       "${widget.address}",
                       style: TextStyle(
                         fontSize: 12,
-                        fontWeight: FontWeight.w300,
+                        fontWeight: FontWeight.w600,
                       ),
                     ), onPressed: () {}, 
                     ),
@@ -101,7 +101,7 @@ class _TrendingItemState extends State<TrendingItem> {
                     "${widget.date}",
                     style: TextStyle(
                       fontSize: 12,
-                      fontWeight: FontWeight.w300,
+                      fontWeight: FontWeight.w600,
                     ),
                   textAlign: TextAlign.center,
                   ),
@@ -122,7 +122,7 @@ class _TrendingItemState extends State<TrendingItem> {
                         "From R"+"${widget.price}",
                         style: TextStyle(
                           fontSize: 12,
-                          fontWeight: FontWeight.w300,
+                          fontWeight: FontWeight.w600,
                         ),
                       textAlign: TextAlign.left,
                       ),
@@ -134,6 +134,9 @@ class _TrendingItemState extends State<TrendingItem> {
                     child: RaisedButton(
                       child: Text(
                         "Get Tickets",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
                       onPressed: () {

@@ -46,8 +46,6 @@ class _SlideItemState extends State<SlideItem> {
                   ),
                   child: GestureDetector(
                     onTap: () {
-                      //Insert event to be fired up when button is clicked here
-                      //in this case, this increments our `countValue` variable by one.
                       print("Clicked");
                       Details();
                     },
@@ -88,7 +86,7 @@ class _SlideItemState extends State<SlideItem> {
                       "${widget.address}",
                       style: TextStyle(
                         fontSize: 12,
-                        fontWeight: FontWeight.w300,
+                        fontWeight: FontWeight.w600,
                       ),
                     ), onPressed: () {}, 
                     ),
@@ -100,6 +98,9 @@ class _SlideItemState extends State<SlideItem> {
                     child: RaisedButton(
                       child: Text(
                         "Get Tickets",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
                       onPressed: () {

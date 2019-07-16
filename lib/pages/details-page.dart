@@ -349,6 +349,15 @@ class _DetailsState extends State<Details> {
       context: context,
       builder: (_) => new AlertDialog(
           title: new Text(title),
+           actions: <Widget>[
+            FlatButton(
+              child: Text("Home"), 
+              onPressed: () {
+                _closeDialog();
+                _closeDialog();
+              },
+            ),
+          ],
           content: new Text(content)
       )
     );

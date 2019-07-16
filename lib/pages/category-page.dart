@@ -1,26 +1,41 @@
 import 'package:flutter/material.dart';
-import 'package:hack2k19sbg/util/restaurants.dart';
+import 'package:hack2k19sbg/util/events.dart';
 import 'package:hack2k19sbg/widgets/trending-item.dart';
 
-class Trending extends StatefulWidget {
+class Category extends StatefulWidget {
+  final String category;
+
+  Category({Key key, @required this.category}) : super(key: key);
+  
   @override
-  _TrendingState createState() => _TrendingState();
+  _CategoryState createState() => _CategoryState(this.category);
 }
 
-class _TrendingState extends State<Trending> {
+class _CategoryState extends State<Category> {
   final TextEditingController _searchControl = new TextEditingController();
+  String category;
+
+  _CategoryState(category){
+    this.category = category;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
-        title: Text("Trending Events"),
+        title: Text(
+          category,
+          style: TextStyle(
+            color: Colors.grey[700]
+          ),
+        ),
         centerTitle: true,
         automaticallyImplyLeading: false,
         leading: IconButton(
           icon: Icon(
-            Icons.arrow_back_ios
+            Icons.arrow_back_ios,
+            color: Colors.grey,
           ),
           onPressed: ()=>Navigator.pop(context),
         ),
@@ -56,16 +71,16 @@ class _TrendingState extends State<Trending> {
                     ),
                     hintText: "Search..",
                     prefixIcon: Icon(
-                      Icons.search,
-                      color: Colors.black,
-                    ),
-                    suffixIcon: Icon(
-                      Icons.filter_list,
-                      color: Colors.black,
-                    ),
-                    hintStyle: TextStyle(
-                      fontSize: 15.0,
-                      color: Colors.black,
+                    Icons.search,
+                    color: Colors.grey[700],
+                  ),
+                  suffixIcon: Icon(
+                    Icons.filter_list,
+                    color: Colors.grey[700],
+                  ),
+                  hintStyle: TextStyle(
+                    fontSize: 15.0,
+                    color: Colors.grey[700],
                     ),
                   ),
                   maxLines: 1,
@@ -81,15 +96,16 @@ class _TrendingState extends State<Trending> {
               primary: false,
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
-              itemCount: restaurants == null ? 0 :restaurants.length,
+              itemCount: events == null ? 0 :events.length,
               itemBuilder: (BuildContext context, int index) {
-                Map restaurant = restaurants[index];
+                Map event = events[index];
                 return TrendingItem(
-                  img: restaurant["img"],
-                  title: restaurant["title"],
-                  address: restaurant["address"],
-                  price: restaurant["price"],
-                  date: restaurant["date"],
+                  img: event["img"],
+                  title: event["title"],
+                  address: event["address"],
+                  price: event["price"],
+                  date: event["date"],
+                  details: event["details"]
                 );
               },
             ),

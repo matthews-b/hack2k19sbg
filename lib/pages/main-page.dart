@@ -7,17 +7,12 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  PageController _pageController;
-  int _page = 0;
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageView(
         physics: NeverScrollableScrollPhysics(),
-        controller: _pageController,
-        onPageChanged: onPageChanged,
         children: <Widget>[
           Home(),
         ],
@@ -34,12 +29,10 @@ class _MainScreenState extends State<MainScreen> {
                 Icons.home,
                 size: 24.0,
               ),
-              color: _page == 0
-                  ? Theme.of(context).accentColor
-                  : Theme
-                  .of(context)
-                  .textTheme.caption.color,
-              onPressed: ()=>_pageController.jumpToPage(0),
+              color: Colors.blueGrey,
+              onPressed: (){
+
+              },
             ),
 
             IconButton(
@@ -47,26 +40,10 @@ class _MainScreenState extends State<MainScreen> {
                 Icons.label,
                 size: 24.0,
               ),
-              color: _page == 1
-                  ? Theme.of(context).accentColor
-                  : Theme
-                  .of(context)
-                  .textTheme.caption.color,
-              onPressed: ()=>_pageController.jumpToPage(1),
-            ),
+              color: Colors.blueGrey,
+              onPressed: () {
 
-            IconButton(
-              icon: Icon(
-                Icons.add,
-                size: 24.0,
-                color: Theme.of(context).primaryColor,
-              ),
-              color: _page == 2
-                  ? Theme.of(context).accentColor
-                  : Theme
-                  .of(context)
-                  .textTheme.caption.color,
-              onPressed: ()=>_pageController.jumpToPage(2),
+              },
             ),
 
             IconButton(
@@ -74,12 +51,10 @@ class _MainScreenState extends State<MainScreen> {
                 Icons.notifications,
                 size: 24.0,
               ),
-              color: _page == 3
-                  ? Theme.of(context).accentColor
-                  : Theme
-                  .of(context)
-                  .textTheme.caption.color,
-              onPressed: ()=>_pageController.jumpToPage(3),
+              color: Colors.blueGrey,
+              onPressed: (){
+
+              },
             ),
 
             IconButton(
@@ -87,12 +62,10 @@ class _MainScreenState extends State<MainScreen> {
                 Icons.person,
                 size: 24.0,
               ),
-              color: _page == 4
-                  ? Theme.of(context).accentColor
-                  : Theme
-                  .of(context)
-                  .textTheme.caption.color,
-              onPressed: ()=>_pageController.jumpToPage(4),
+              color: Colors.blueGrey,
+            onPressed: (){
+              
+            },
             ),
 
             SizedBox(width:7),
@@ -100,40 +73,8 @@ class _MainScreenState extends State<MainScreen> {
         ),
         color: Theme.of(context).primaryColor,
         shape: CircularNotchedRectangle(),
-
-      ),
-
-      floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
-        elevation: 10.0,
-        child: Icon(
-          Icons.add,
-        ),
-        onPressed: ()=>_pageController.jumpToPage(2),
       ),
     );
   }
 
-  void navigationTapped(int page) {
-    _pageController.jumpToPage(page);
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _pageController = PageController();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _pageController.dispose();
-  }
-
-  void onPageChanged(int page) {
-    setState(() {
-      this._page = page;
-    });
-  }
 }

@@ -6,6 +6,7 @@ class TrendingItem extends StatefulWidget {
   final String address;
   final String date;
   final String price;
+  final String details;
 
   TrendingItem({
     Key key,
@@ -13,7 +14,8 @@ class TrendingItem extends StatefulWidget {
     @required this.title,
     @required this.address,
     @required this.date,
-    @required this.price
+    @required this.price,
+    @required this.details
   })
     : super(key: key);
 
@@ -45,6 +47,7 @@ class _TrendingItemState extends State<TrendingItem> {
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w800,
+                      color: Colors.grey[700]
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -79,12 +82,13 @@ class _TrendingItemState extends State<TrendingItem> {
                 padding: EdgeInsets.only(left: 15.0),
                 child: Container(
                     child:FlatButton.icon(
-                      icon: Icon(Icons.location_on),
+                      icon: Icon(Icons.location_on, color: Colors.blue[800],),
                       label:  Text(
                       "${widget.address}",
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
+                        color: Colors.blue[800]
                       ),
                     ), onPressed: () {}, 
                     ),
@@ -102,6 +106,7 @@ class _TrendingItemState extends State<TrendingItem> {
                     style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
+                      color: Colors.blue[800]
                     ),
                   textAlign: TextAlign.center,
                   ),
@@ -118,14 +123,28 @@ class _TrendingItemState extends State<TrendingItem> {
                   Padding(
                     padding: EdgeInsets.only(left: 15.0),
                     child: Container(
-                      child: Text(
-                        "From R"+"${widget.price}",
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      textAlign: TextAlign.left,
-                      ),
+                      child: Row(
+                        children: <Widget>[
+                          Text(
+                            "From:",
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.blue[800]
+                            ),
+                          textAlign: TextAlign.left,
+                          ),
+                          
+                          Text(
+                            " R"+"${widget.price}",
+                            style: TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w900,
+                              color: Colors.blue[800]
+                            ),
+                          textAlign: TextAlign.left,
+                          ),
+                        ],)
                     ),
                   ),
                   
@@ -136,9 +155,12 @@ class _TrendingItemState extends State<TrendingItem> {
                         "Get Tickets",
                         style: TextStyle(
                           fontWeight: FontWeight.w600,
+                          color: Colors.white
                         ),
                       ),
+                      padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
+                      color: Colors.blue[800],
                       onPressed: () {
                         /*...*/
                       },

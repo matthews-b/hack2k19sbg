@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hack2k19sbg/pages/trending-page.dart';
+import 'package:hack2k19sbg/pages/category-page.dart';
 import 'package:hack2k19sbg/util/categories.dart';
-import 'package:hack2k19sbg/util/friends.dart';
-import 'package:hack2k19sbg/util/restaurants.dart';
+import 'package:hack2k19sbg/util/events.dart';
 import 'package:hack2k19sbg/widgets/slide-item.dart';
 
 class Home extends StatefulWidget {
@@ -10,9 +9,9 @@ class Home extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home>{
+class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
   final TextEditingController _searchControl = new TextEditingController();
-
+  String category;
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -38,24 +37,28 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home>{
                   contentPadding: EdgeInsets.all(10.0),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(5.0),
-                    borderSide: BorderSide(color: Colors.white,),
+                    borderSide: BorderSide(
+                      color: Colors.white,
+                    ),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white,),
+                    borderSide: BorderSide(
+                      color: Colors.white,
+                    ),
                     borderRadius: BorderRadius.circular(5.0),
                   ),
                   hintText: "Search..",
                   prefixIcon: Icon(
                     Icons.search,
-                    color: Colors.black,
+                    color: Colors.grey[700],
                   ),
                   suffixIcon: Icon(
                     Icons.filter_list,
-                    color: Colors.black,
+                    color: Colors.grey[700],
                   ),
                   hintStyle: TextStyle(
                     fontSize: 15.0,
-                    color: Colors.black,
+                    color: Colors.grey[700],
                   ),
                 ),
                 maxLines: 1,
@@ -70,7 +73,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home>{
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.fromLTRB(10.0,0,10.0,0),
+        padding: EdgeInsets.fromLTRB(10.0, 0, 10.0, 0),
         child: ListView(
           children: <Widget>[
             SizedBox(height: 20.0),
@@ -78,27 +81,26 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home>{
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Text(
-                  "Trending Events",
+                  "Category Events",
                   style: TextStyle(
-                    fontSize: 23,
-                    fontWeight: FontWeight.w800,
-                  ),
+                      fontSize: 23,
+                      fontWeight: FontWeight.w800,
+                      color: Colors.grey[700]),
                 ),
-
                 FlatButton(
                   child: Text(
-                    "More",
+                    "More...",
                     style: TextStyle(
-//                      fontSize: 22,
-//                      fontWeight: FontWeight.w800,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
                       color: Theme.of(context).accentColor,
                     ),
                   ),
-                  onPressed: (){
+                  onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (BuildContext context){
-                          return Trending();
+                        builder: (BuildContext context) {
+                          return Category(category: "Multi",);
                         },
                       ),
                     );
@@ -111,136 +113,111 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home>{
 
             //Horizontal List here
             Container(
-              height: MediaQuery.of(context).size.height/2.4,
+              height: MediaQuery.of(context).size.height / 2.4,
               width: MediaQuery.of(context).size.width,
               child: ListView.builder(
                 primary: false,
                 shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
-                itemCount: restaurants == null ? 0 :restaurants.length,
+                itemCount: events == null ? 0 : events.length,
                 itemBuilder: (BuildContext context, int index) {
-                Map restaurant = restaurants[index];
+                  Map event = events[index];
 
-                return Padding(
-                  padding: EdgeInsets.only(right: 10.0),
-                  child: SlideItem(
-                    img: restaurant["img"],
-                    title: restaurant["title"],
-                    address: restaurant["address"],
-                    price: restaurant["price"],
-                    date: restaurant["date"],
-                  ),
-                );
-              },
+                  return Padding(
+                    padding: EdgeInsets.only(right: 10.0),
+                    child: SlideItem(
+                      img: event["img"],
+                      title: event["title"],
+                      address: event["address"],
+                      price: event["price"],
+                      date: event["date"],
+                    ),
+                  );
+                },
               ),
             ),
 
             SizedBox(height: 20.0),
 
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(
-                  "Categories",
-                  style: TextStyle(
-                    fontSize: 23,
-                    fontWeight: FontWeight.w800,
-                  ),
-                ),
-
-//                 FlatButton(
-//                   child: Text(
-//                     "See all (9)",
-//                     style: TextStyle(
-// //                      fontSize: 22,
-// //                      fontWeight: FontWeight.w800,
-//                       color: Theme.of(context).accentColor,
-//                     ),
-//                   ),
-//                   onPressed: (){
-// //                    Navigator.of(context).push(
-// //                      MaterialPageRoute(
-// //                        builder: (BuildContext context){
-// //                          return DishesScreen();
-// //                        },
-// //                      ),
-// //                    );
-//                   },
-                // ),
-              ],
+            Text(
+              "Categories",
+              style: TextStyle(
+                  fontSize: 23,
+                  fontWeight: FontWeight.w800,
+                  color: Colors.grey[700]),
             ),
 
             SizedBox(height: 20.0),
 
             //Horizontal List here
             Container(
-              height: MediaQuery.of(context).size.height/6,
+              height: MediaQuery.of(context).size.height / 6,
               child: ListView.builder(
                 primary: false,
                 scrollDirection: Axis.horizontal,
                 shrinkWrap: true,
-                itemCount: categories == null ? 0:categories.length,
+                itemCount: categories == null ? 0 : categories.length,
                 itemBuilder: (BuildContext context, int index) {
-                  Map cat = categories[index];
+                Map cat = categories[index];
 
-                  return Padding(
-                    padding: EdgeInsets.only(right: 10.0),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8.0),
-                      child: Stack(
-                        children: <Widget>[
-                          Image.asset(
-                            cat["img"],
-                            height: MediaQuery.of(context).size.height/6,
-                            width: MediaQuery.of(context).size.height/6,
-                            fit: BoxFit.cover,
-                          ),
-
-                          Container(
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
-                                // Add one stop for each color. Stops should increase from 0 to 1
-                                stops: [0.2, 0.7],
-                                colors: [
-                                  cat['color1'],
-                                  cat['color2'],
-                                ],
-                                // stops: [0.0, 0.1],
-                              ),
+                  return GestureDetector(
+                    onTap: (){
+                      category = cat["name"];
+                      _catHandle();
+                      },
+                    child: Padding(
+                      padding: EdgeInsets.only(right: 10.0),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8.0),
+                        child: Stack(
+                          children: <Widget>[
+                            Image.asset(
+                              cat["img"],
+                              height: MediaQuery.of(context).size.height / 6,
+                              width: MediaQuery.of(context).size.height / 6,
+                              fit: BoxFit.cover,
                             ),
-                            height: MediaQuery.of(context).size.height/6,
-                            width: MediaQuery.of(context).size.height/6,
-                          ),
-
-
-                          Center(
-
-                            child: Container(
-                              height: MediaQuery.of(context).size.height/6,
-                              width: MediaQuery.of(context).size.height/6,
-                              padding: EdgeInsets.all(1),
-                              constraints: BoxConstraints(
-                                minWidth: 20,
-                                minHeight: 20,
+                            Container(
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                  // Add one stop for each color. Stops should increase from 0 to 1
+                                  stops: [0.2, 0.7],
+                                  colors: [
+                                    cat['color1'],
+                                    cat['color2'],
+                                  ],
+                                  // stops: [0.0, 0.1],
+                                ),
                               ),
-                              child: Center(
-                                child: Text(
-                                  cat["name"],
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
+                              height: MediaQuery.of(context).size.height / 6,
+                              width: MediaQuery.of(context).size.height / 6,
+                            ),
+                            Center(
+                              child: Container(
+                                height: MediaQuery.of(context).size.height / 6,
+                                width: MediaQuery.of(context).size.height / 6,
+                                padding: EdgeInsets.all(1),
+                                constraints: BoxConstraints(
+                                  minWidth: 20,
+                                  minHeight: 20,
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    cat["name"],
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    textAlign: TextAlign.center,
                                   ),
-                                  textAlign: TextAlign.center,
                                 ),
                               ),
                             ),
-                          ),
-
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   );
@@ -249,17 +226,22 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home>{
             ),
 
             SizedBox(height: 30.0),
-
-
           ],
         ),
       ),
     );
+  }
 
+  void _catHandle() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (BuildContext context) {
+          return Category(category: category);
+        },
+      ),
+    );
   }
 
   @override
   bool get wantKeepAlive => true;
-
-
 }

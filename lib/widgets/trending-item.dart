@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hack2k19sbg/pages/details-page.dart';
 
 class TrendingItem extends StatefulWidget {
   final String img;
@@ -24,6 +25,7 @@ class TrendingItem extends StatefulWidget {
 }
 
 class _TrendingItemState extends State<TrendingItem> {
+  String event;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -162,7 +164,8 @@ class _TrendingItemState extends State<TrendingItem> {
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
                       color: Colors.blue[800],
                       onPressed: () {
-                        /*...*/
+                        event = "${widget.title}";
+                        _eventDetails();
                       },
                       
                   )
@@ -175,4 +178,14 @@ class _TrendingItemState extends State<TrendingItem> {
       ),
     );
   }
+  void _eventDetails() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (BuildContext context) {
+          return Details(event: event);
+        },
+      ),
+    );
+  }
+
 }

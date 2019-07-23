@@ -121,7 +121,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
                 scrollDirection: Axis.horizontal,
                 itemCount: events == null ? 0 : events.length,
                 itemBuilder: (BuildContext context, int index) {
-                  Map event = events[index];
+                Map event = events[index];
 
                   return Padding(
                     padding: EdgeInsets.only(right: 10.0),

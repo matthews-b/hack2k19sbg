@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:hack2k19sbg/pages/main-page.dart';
+import 'package:hack2k19sbg/pages/login-page.dart';
 import 'package:hack2k19sbg/util/const.dart';
 
 
@@ -36,7 +36,7 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       title: Constants.appName,
       theme: isDark ? Constants.darkTheme : Constants.lightTheme,
-      home: MainScreen(),
+      home: LoginPage(),
     );
   }
 }

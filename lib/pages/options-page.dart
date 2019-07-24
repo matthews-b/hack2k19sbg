@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hack2k19sbg/pages/home-page.dart';
+import 'package:hack2k19sbg/models/navigate.dart';
 import 'package:hack2k19sbg/util/options.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
@@ -24,22 +24,26 @@ class _OptionsState extends State<Options> {
         physics: NeverScrollableScrollPhysics(),
         itemCount: options == null ? 0 : options.length,
         itemBuilder: (context, i) {
+          //Fetch the Options List from options.dart and store each in a Map
           Map option = options[i];
           if (i.isOdd) Divider();
-          return _buildRow(option.values.toList()[0]);
+          return _buildEventCategory(option.values.toList()[0]);
         }
       ),
+
+      //Done Floating Button to Save the selected favorite categories
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () async {
+          //Success Alert after selecting facorite categories
           Alert(
             context: context,
             type: AlertType.success,
-            title: "Done",
+            title: "Succeffully added favorite categories",
             buttons: [
               DialogButton(
-                child: Icon(Icons.done),
-                onPressed: () => Navigator.pop(context),
-                color: Colors.green
+                onPressed: () {},
+                color: Colors.transparent, 
+                child: null,
               ),
             ]
           ).show();
@@ -47,13 +51,9 @@ class _OptionsState extends State<Options> {
           await new Future.delayed(const Duration(seconds: 1));
           
           Navigator.of(context).pop();
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (BuildContext context) {
-                return Home();
-              },
-            ),
-          );
+          Navigate nav = Navigate(context, "Home");
+          nav.navigate("");
+          nav = null;
         },
         icon: Icon(Icons.save),
         label: Text("Done"),
@@ -61,8 +61,8 @@ class _OptionsState extends State<Options> {
     );
   }
 
-  // #docregion _buildRow
-  Widget _buildRow(String option) {
+  //Build each event category with a heart icon
+  Widget _buildEventCategory(String option) {
     final bool alreadySaved = _saved.contains(option);
     return ListTile(
       title: Text(
@@ -81,35 +81,6 @@ class _OptionsState extends State<Options> {
           }
         });
       },
-    );
-  }
-
-  void _pushSaved() {
-    Navigator.of(context).push(
-      MaterialPageRoute<void>(
-        builder: (BuildContext context) {
-          final Iterable<ListTile> tiles = _saved.map(
-            (String option) {
-              return ListTile(
-                title: Text(
-                  option,
-                ),
-              );
-            },
-          );
-          final List<Widget> divided = ListTile.divideTiles(
-            context: context,
-            tiles: tiles,
-          ).toList();
-
-          return Scaffold(
-            appBar: AppBar(
-              title: Text('Saved Categories'),
-            ),
-            body: ListView(children: divided),
-          );
-        },
-      ),
     );
   }
 }

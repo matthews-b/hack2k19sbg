@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hack2k19sbg/pages/category-page.dart';
+import 'package:hack2k19sbg/models/navigate.dart';
 import 'package:hack2k19sbg/util/categories.dart';
+import 'package:hack2k19sbg/util/locations.dart';
 import 'package:hack2k19sbg/util/events.dart';
 import 'package:hack2k19sbg/widgets/slide-item.dart';
 
@@ -19,6 +20,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
       appBar: PreferredSize(
         child: Padding(
           padding: EdgeInsets.only(top: 30.0, left: 10.0, right: 10.0),
+          //Search Bar Card
           child: Card(
             elevation: 6.0,
             child: Container(
@@ -28,6 +30,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
                   Radius.circular(5.0),
                 ),
               ),
+              //Search Textfield
               child: TextField(
                 style: TextStyle(
                   fontSize: 15.0,
@@ -52,16 +55,13 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
                     Icons.search,
                     color: Colors.grey[700],
                   ),
-                  suffixIcon: Icon(
-                    Icons.filter_list,
-                    color: Colors.grey[700],
-                  ),
                   hintStyle: TextStyle(
                     fontSize: 15.0,
                     color: Colors.grey[700],
                   ),
                 ),
                 maxLines: 1,
+                //Text Controller for search
                 controller: _searchControl,
               ),
             ),
@@ -77,11 +77,12 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
         child: ListView(
           children: <Widget>[
             SizedBox(height: 20.0),
+            //Trending Events List
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Text(
-                  "Category Events",
+                  "Trending Events",
                   style: TextStyle(
                       fontSize: 23,
                       fontWeight: FontWeight.w800,
@@ -97,13 +98,9 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
                     ),
                   ),
                   onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (BuildContext context) {
-                          return Category(category: "Multi",);
-                        },
-                      ),
-                    );
+                    Navigate nav = Navigate(context, "Category");
+                    nav.navigate("Multi");
+                    nav = null;
                   },
                 ),
               ],
@@ -111,7 +108,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
 
             SizedBox(height: 10.0),
 
-            //Horizontal List here
+            //Trending Events List Tiles
             Container(
               height: MediaQuery.of(context).size.height / 2.4,
               width: MediaQuery.of(context).size.width,
@@ -138,7 +135,8 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
             ),
 
             SizedBox(height: 20.0),
-
+            
+            //Categories List
             Text(
               "Categories",
               style: TextStyle(
@@ -149,7 +147,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
 
             SizedBox(height: 20.0),
 
-            //Horizontal List here
+            //Categories List Tile
             Container(
               height: MediaQuery.of(context).size.height / 6,
               child: ListView.builder(
@@ -162,9 +160,99 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
 
                   return GestureDetector(
                     onTap: (){
-                      category = cat["name"];
-                      _catHandle();
+                      Navigate nav = Navigate(context, "Category");
+                      nav.navigate(cat["name"]);
+                      nav = null;
                       },
+                    child: Padding(
+                      padding: EdgeInsets.only(right: 10.0),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8.0),
+                        child: Stack(
+                          children: <Widget>[
+                            Image.asset(
+                              cat["img"],
+                              height: MediaQuery.of(context).size.height / 6,
+                              width: MediaQuery.of(context).size.height / 6,
+                              fit: BoxFit.cover,
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                  // Add one stop for each color. Stops should increase from 0 to 1
+                                  stops: [0.2, 0.7],
+                                  colors: [
+                                    cat['color1'],
+                                    cat['color2'],
+                                  ],
+                                  // stops: [0.0, 0.1],
+                                ),
+                              ),
+                              height: MediaQuery.of(context).size.height / 6,
+                              width: MediaQuery.of(context).size.height / 6,
+                            ),
+                            Center(
+                              child: Container(
+                                height: MediaQuery.of(context).size.height / 6,
+                                width: MediaQuery.of(context).size.height / 6,
+                                padding: EdgeInsets.all(1),
+                                constraints: BoxConstraints(
+                                  minWidth: 20,
+                                  minHeight: 20,
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    cat["name"],
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+
+            SizedBox(height: 20.0),
+
+            Text(
+              "Locations",
+              style: TextStyle(
+                  fontSize: 23,
+                  fontWeight: FontWeight.w800,
+                  color: Colors.grey[700]),
+            ),
+
+            SizedBox(height: 20.0),
+
+            //Locations List Tiles
+            Container(
+              height: MediaQuery.of(context).size.height / 6,
+              child: ListView.builder(
+                primary: false,
+                scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
+                itemCount: locations == null ? 0 : locations.length,
+                itemBuilder: (BuildContext context, int index) {
+                Map cat = locations[index];
+
+                  return GestureDetector(
+                    onTap: (){
+                      Navigate nav = Navigate(context, "Category");
+                      nav.navigate(cat["name"]);
+                      nav = null;
+                    },
                     child: Padding(
                       padding: EdgeInsets.only(right: 10.0),
                       child: ClipRRect(
@@ -228,16 +316,6 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
             SizedBox(height: 30.0),
           ],
         ),
-      ),
-    );
-  }
-
-  void _catHandle() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (BuildContext context) {
-          return Category(category: category);
-        },
       ),
     );
   }

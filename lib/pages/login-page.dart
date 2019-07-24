@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hack2k19sbg/pages/options-page.dart';
+import 'package:hack2k19sbg/models/navigate.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -34,17 +34,9 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void performLogin() {
-    final snackbar = SnackBar(
-      content: Text("Email : $_email, password : $_password"),
-    );
-    scaffoldKey.currentState.showSnackBar(snackbar);
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (BuildContext context) {
-          return Options();
-        },
-      ),
-    );
+    Navigate nav = Navigate(context, "Options");
+    nav.navigate("");
+    nav = null;
   }
 
   @override
